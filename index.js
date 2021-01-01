@@ -8,15 +8,33 @@ client.once('ready', () => {
 });
 
 client.on('message', message => {
-	const lowerCaseUserMessage = message.content.toLowerCase();
-	if (lowerCaseUserMessage === `${prefix}ping`) {
+	if (!message.content.startsWith(prefix) || message.author.bot) return;
+
+	const args = message.content.slice(prefix.length).trim().split(/ +/);
+	const command = args.shift().toLowerCase();
+
+	if (command === 'ping') {
 		message.channel.send('Pong');
 	}
-
-	if (message.content === `${prefix}server`) {
-		message.channel.send(` - \nServer name: ${message.guild.name}\nTotal members: ${message.guild.memberCount}\nCreated on: ${message.guild.createdAt}`);
+	else if (command === 'args-info') {
+		if (!args.length) {
+			return message.channel.send(`${message.author}, you didn't provide any agruments.`);
+		}
+		else if (args[0] === 'foo') {
+			return message.channel.send('bar');
+		}
+		message.channel.send(`First Arg: ${args[0]}`);
 	}
+	else if (command === 'kick') {
+		// Grab the 'first' mentioned user from the message
+		// this will return a 'User' object, just like 'message.author'
+		if (!message.mentions.users.size) {
+			return message.reply('You need to tag a user in order to kick them');
+		}
+		const taggedUser = message.mentions.users.first();
+		message.channel.send(`You wanted to kick: ${taggedUser.username}`);
+	}
+
 });
 
 client.login(token);
-
