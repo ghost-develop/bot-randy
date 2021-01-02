@@ -35,6 +35,14 @@ client.on('message', message => {
 		message.channel.send(`You wanted to kick: ${taggedUser.username}`);
 	}
 
+	else if (command === 'message') {
+		if (!message.mentions.users.size) {
+			return message.reply('You have to tag a user to ping them');
+		}
+		const taggedUser = message.mentions.users.first();
+		taggedUser.send(typeof args);
+	}
+
 });
 
 client.login(token);
