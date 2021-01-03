@@ -1,10 +1,15 @@
 /* eslint-disable no-unused-vars */
 const Discord = require('discord.js');
 const { prefix, token } = require('./config.json');
+
 const client = new Discord.Client();
 
 client.once('ready', () => {
 	console.log('Ready!');
+});
+
+client.once('disconnect', () => {
+	console.log('Disconnect!');
 });
 
 client.on('message', message => {
@@ -42,6 +47,17 @@ client.on('message', message => {
 		const taggedUser = message.mentions.users.first();
 		taggedUser.send(typeof args);
 	}
+
+	else if (command === 'avatar') {
+		if (!message.mentions.users.size) {
+			return message.channel.send(`Your avatar: <${message.author.displayAvatarURL({ format: 'png', dynamic: true })}>`);
+		}
+		const avatarList = message.mentions.users.map(user => {
+			return `${user.username}'s avatar: <${user.displayAvatarURL({ format: 'png', dynamic: true })}>`;
+		});
+		message.channel.send(avatarList);
+	}
+
 
 });
 
