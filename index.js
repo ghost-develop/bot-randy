@@ -57,6 +57,14 @@ client.on('message', message => {
 		});
 		message.channel.send(avatarList);
 	}
+	else if (command === 'remove') {
+		const amount = parseInt(args[0]);
+
+		if (isNaN(amount)) {
+			return message.reply('that doesn\'t seem to be a valid number.');
+		}
+		message.channel.bulkDelete(amount);
+	}
 
 
 });
