@@ -58,15 +58,16 @@ client.on('message', message => {
 		message.channel.send(avatarList);
 	}
 	else if (command === 'remove') {
-		const amount = parseInt(args[0]);
+		const amount = parseInt(args[0] + 1);
 
 		if (isNaN(amount)) {
 			return message.reply('that doesn\'t seem to be a valid number.');
 		}
+		else if (amount <= 1 || amount > 100) {
+			return message.reply('an input between 1 and 100 is required.');
+		}
 		message.channel.bulkDelete(amount);
 	}
-
-
 });
 
 client.login(token);
