@@ -8,10 +8,6 @@ client.once('ready', () => {
 	console.log('Ready!');
 });
 
-client.once('disconnect', () => {
-	console.log('Disconnect!');
-});
-
 client.on('message', message => {
 	if (!message.content.startsWith(prefix) || message.author.bot) return;
 
