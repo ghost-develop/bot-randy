@@ -12,5 +12,5 @@ module.exports = {
 			return message.reply('an input between 1 and 100 is required.');
 		}
 		message.channel.bulkDelete(amount);
-	}
-}
+	},
+};
